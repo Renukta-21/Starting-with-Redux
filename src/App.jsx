@@ -28,6 +28,8 @@ const anecdotesReducer = (state = initialState, action) => {
         votes: anecdoteToUpdate.votes + 1
       }
       return state.map(a=> a.id=== id ? updatedAnecdote : a)
+      case 'ADD_ANECDOTE':
+        return state.concat(payload)
     default:
       return state
   }
