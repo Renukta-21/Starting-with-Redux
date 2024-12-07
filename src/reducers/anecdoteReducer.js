@@ -1,3 +1,21 @@
+const anecdotesReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'UPDATE_VOTE':
+      const id = action.payload.id
+      const anecdoteToUpdate = state.find(e => e.id === id)
+      const updatedAnecdote = {
+        ...anecdoteToUpdate,
+        votes: anecdoteToUpdate.votes + 1
+      }
+      return state.map(a=> a.id=== id ? updatedAnecdote : a)
+      case 'ADD_ANECDOTE':
+        return state.concat(payload
+          
+        )
+    default:
+      return state
+  }
+}
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -6,24 +24,13 @@ const anecdotesAtStart = [
   'Premature optimization is the root of all evil.',
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
-
-const getId = () => (100000 * Math.random()).toFixed(0)
-
-const asObject = (anecdote) => {
+const createId = () => Math.floor(Math.random() * 1000)
+const initialState = anecdotesAtStart.map(a => {
   return {
-    content: anecdote,
-    id: getId(),
-    votes: 0
+    description: a,
+    votes: 0,
+    id: createId()
   }
-}
+})
 
-const initialState = anecdotesAtStart.map(asObject)
-
-const reducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
-
-  return state
-}
-
-export default reducer
+export default anecdotesReducer
