@@ -1,21 +1,3 @@
-const anecdotesReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'UPDATE_VOTE':
-      const id = action.payload.id
-      const anecdoteToUpdate = state.find(e => e.id === id)
-      const updatedAnecdote = {
-        ...anecdoteToUpdate,
-        votes: anecdoteToUpdate.votes + 1
-      }
-      return state.map(a=> a.id=== id ? updatedAnecdote : a)
-      case 'ADD_ANECDOTE':
-        return state.concat(payload
-          
-        )
-    default:
-      return state
-  }
-}
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -33,4 +15,40 @@ const initialState = anecdotesAtStart.map(a => {
   }
 })
 
+const anecdotesReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'VOTE_ANECDOTE':
+      const id = action.payload.id
+      const anecdoteToUpdate = state.find(e => e.id === id)
+      const updatedAnecdote = {
+        ...anecdoteToUpdate,
+        votes: anecdoteToUpdate.votes + 1
+      }
+      return state.map(a => a.id === id ? updatedAnecdote : a)
+    case 'ADD_ANECDOTE':
+      return state.concat(action.payload)
+    default:
+      return state
+  }
+}
+
+
+export const voteAnecdote = (id) => {
+  return ({
+    type: 'VOTE_ANECDOTE',
+    payload: {
+      id
+    }
+  })
+}
+export const addAnecdote = (content)=>{
+    return({
+      type:'ADD_ANECDOTE',
+      payload:{
+        description: content,
+        votes:0,
+        id:createId()
+      }
+    })
+}
 export default anecdotesReducer

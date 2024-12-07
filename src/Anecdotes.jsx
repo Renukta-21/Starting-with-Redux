@@ -1,15 +1,18 @@
-import { useSelector, useStore } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { voteAnecdote } from "./reducers/anecdoteReducer"
 
 function Anecdotes() {
     const anecdotes = useSelector(state=> state) 
-  return (
+    const dispatch = useDispatch()
+    
+    return (
     <div>
       <h3>Ancecdotes</h3>
       {anecdotes.map(a => (
         <div key={a.id}>
           <p>{a.description}</p>
-          <small>Votes: {a.votes}</small><br />
-          <button onClick={() => handleVote(a.id)}>Vote</button>
+          <small>Votes: {a.votes}</small>
+          <button onClick={()=> dispatch(voteAnecdote(a.id))}>Vote</button>
         </div>
       ))}
     </div>
